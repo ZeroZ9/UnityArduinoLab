@@ -8,6 +8,10 @@ float gyroZ = 0.0;
 // Time tracking
 unsigned long previousMillis = 0;
 const long interval = 100;  // Interval at which to send data (milliseconds)
+const long holdingInterval = 5000;
+unsigned long lastStateCahnge = 0;
+
+bool isHolding = true;
 
 void setup() {
   // Start serial communication
@@ -17,6 +21,11 @@ void setup() {
 void loop() {
   unsigned long currentMillis = millis();
 
+  if (currentMillis - lastStateChangeMillis >= stateChangeInterval) {
+    lastStateChangeMillis = currentMillis;
+    isHolding = !isHolding; 
+  }
+
   if (currentMillis - previousMillis >= interval) {
     previousMillis = currentMillis;
 
@@ -25,6 +34,11 @@ void loop() {
     gyroY += 0.2;
     gyroZ += 0.3;
 
+    if (isHolding) {
+      Serial.print("hold,")
+    } else {
+      Serial.print("release,")
+    }
     // Send data to the serial port
     //Serial.print("X:");
     Serial.print(gyroX);
