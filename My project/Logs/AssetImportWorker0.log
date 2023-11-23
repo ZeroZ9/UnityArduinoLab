@@ -335,3 +335,19 @@ Received Import Request.
 Start importing Assets/test.cs using Guid(d24c3376399e04c64b8c5762f34d6479) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '23f83c17b1fc86479fbc7688f1e65a96') in 0.001127 seconds
 Number of updated asset objects reloaded before import = 0
 Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 1115.462479 seconds.
+  path: Assets/arm.rar
+  artifactKey: Guid(63ba4876e20544280b4cfb2510ea55f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/arm.rar using Guid(63ba4876e20544280b4cfb2510ea55f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2fafc6f045c012373be51ac196d63304') in 0.008733 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 1
+========================================================================
+Received Import Request.
+  Time since last request: 118.572362 seconds.
+  path: Assets/arm.obj
+  artifactKey: Guid(90807afd04a4548c98539a0e5a0c0ddd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/arm.obj using Guid(90807afd04a4548c98539a0e5a0c0ddd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8d664d989e0c1bf040a005e74d47f98d') in 0.191349 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
