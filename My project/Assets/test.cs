@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class RotateThroughtSerial : MonoBehaviour
 {
-    SerialPort data_stream = new SerialPort("COM3", 115200); // Replace with your port name
+    SerialPort data_stream = new SerialPort("/dev/cu.usbmodem123456781", 115200); // Replace with your port name
     public string receivedstring;
     public GameObject test_data;
 
     private GameObject objectToHold;
-    
+
     private bool isHolding = false;
 
     void Start()
