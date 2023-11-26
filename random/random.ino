@@ -1,17 +1,16 @@
 #include <Arduino.h>
 
 // Simulated gyro values
-float gyroX = 0.0;
-float gyroY = 0.0;
-float gyroZ = 0.0;
+float gyroX = 0.0; // Initial gyro value for X-axis (horizontal rotation)
+float gyroY = 0.0; // Initial gyro value for Y-axis (not used in this scenario)
+float gyroZ = 0.0; // Initial gyro value for Z-axis (vertical rotation)
 
 // Time tracking
 unsigned long previousMillis = 0;
-const long interval = 100;  // Interval at which to send data (milliseconds)
-const long holdingInterval = 5000;
-unsigned long lastStateChangeMillis = 0;
+const long interval = 20;  // Interval at which to update gyro values (20 milliseconds for smooth rotation)
+const long rotationDuration = 5000; // Duration to complete 90 degree rotation in milliseconds
 
-bool isHolding = true;
+bool isHolding = true; // The hand is always holding in this scenario
 
 void setup() {
   // Start serial communication
@@ -21,30 +20,34 @@ void setup() {
 void loop() {
   unsigned long currentMillis = millis();
 
-  if (currentMillis - lastStateChangeMillis >= holdingInterval) {
-    lastStateChangeMillis = currentMillis;
-    isHolding = !isHolding; 
-  }
+  // Check if 5 seconds have passed to rotate horizontally
+  if (currentMillis < 5000) {
+    // Calculate the increment for each loop iteration to complete the rotation in 5 seconds
 
-  if (currentMillis - previousMillis >= interval) {
-    previousMillis = currentMillis;
+    // Update gyroX for horizontal rotation
+    gyroX += 0.04;
 
-    // Simulate gyro data changes
-    gyroX += 0.1;
-    gyroY += 0.2;
-    gyroZ += 0.3;
-
-    if (isHolding) {
-      Serial.print("hold,");
-    } else {
-      Serial.print("release,");
+    // Ensure that gyroX does not exceed 90 degrees
+    if (gyroX > 90.0) {
+      gyroX = 90.0;
     }
-    // Send data to the serial port
-    //Serial.print("X:");
-    Serial.print(gyroX);
-    Serial.print(",");
-    Serial.print(gyroY);
-    Serial.print(",");
-    Serial.println(gyroZ);
+  } else {
+
+    // Update gyroZ for vertical rotation
+    gyroZ += 0.03;
+
+    // Ensure that gyroZ does not exceed 90 degrees
+    if (gyroZ > 90.0) {
+      gyroZ = 90.0;
+    }
   }
+
+
+  Serial.print("hold,");
+  // Send data to the serial port
+  Serial.print(gyroX);
+  Serial.print(",");
+  Serial.print(gyroY);
+  Serial.print(",");
+  Serial.println(gyroZ);
 }
