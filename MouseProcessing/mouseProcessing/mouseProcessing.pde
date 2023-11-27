@@ -1,9 +1,14 @@
 import java.awt.Robot;
 import java.awt.AWTException;
+import java.awt.Point; // Import the Point class
+import java.awt.MouseInfo;
 import processing.serial.*;
 
 Serial myPort;  // The serial port
 Robot robot;
+float cursorSpeed = 5.0; // Cursor movement speed
+float threshold = 0.1; // Threshold for neutral position
+
 
 void setup() {
   size(400, 400);
@@ -44,15 +49,20 @@ void serialEvent(Serial myPort) {
       // Optionally use a third value for another purpose
       // float sensorZ = float(sensorStrings[2]);
 
-      // Map the sensor values to the screen size
-      int screenX = (int) map(sensorX, -90, 90, 0, displayWidth);
-      int screenY = (int) map(sensorY, -90, 90, 0, displayHeight);
       
-      if (sensorStrings[0].equals("release")){
-          robot.mousePress(java.awt.event.InputEvent.BUTTON1_MASK);
-          robot.mouseRelease(java.awt.event.InputEvent.BUTTON1_MASK);
-       }
-      // Move the system cursor
+      Point mousePos = MouseInfo.getPointerInfo().getLocation(); // Current mouse position
+      int screenX = mousePos.x;
+      int screenY = mousePos.y;
+      
+      // Determine direction based on sensor readings
+      if (abs(sensorX) > threshold) {
+        screenX += (sensorX > 0) ? cursorSpeed : -cursorSpeed;
+      }
+      if (abs(sensorY) > threshold) {
+        screenY += (sensorY > 0) ? cursorSpeed : -cursorSpeed;
+      }
+
+      // Move the cursor
       robot.mouseMove(screenX, screenY);
     }
   }
